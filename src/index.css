@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  /* 几何三原色 */
+  --color-circle: #FF6B4A;       /* 圆形 = 珊瑚橙 */
+  --color-triangle: #3B82F6;     /* 三角形 = 天空蓝 */
+  --color-square: #10B981;       /* 正方形 = 薄荷绿 */
+
+  /* 暖色背景 */
+  --color-cream: #FFFBF5;
+  --color-warm-50: #FEF7ED;
+  --color-warm-100: #FDECD3;
+  --color-warm-200: #FBD9A6;
+
+  /* 中性色 */
+  --color-ink: #1A1A2E;
+  --color-ink-light: #4A4A5A;
+  --color-ink-muted: #8E8E9E;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-ink selection:bg-circle/20;
+    background-image:
+      /* 淡淡的几何网格 */
+      linear-gradient(90deg, rgba(255,107,74,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+      /* 几何装饰点 */
+      radial-gradient(circle at 10% 20%, rgba(255,107,74,0.08) 0%, transparent 20%),
+      radial-gradient(circle at 90% 80%, rgba(16,185,129,0.08) 0%, transparent 20%),
+      radial-gradient(circle at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 30%);
+    background-attachment: fixed;
+  }
+}
+
+/* === 几何装饰元素 === */
+
+/* 圆形装饰 */
+.geo-circle {
+  @apply rounded-full;
+  border: 3px solid var(--color-circle);
+}
+
+/* 三角形装饰（用 CSS clip-path） */
+.geo-triangle {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 26px solid var(--color-triangle);
+}
+
+/* 正方形装饰 */
+.geo-square {
+  @apply rounded-sm;
+  border: 3px solid var(--color-square);
+  transform: rotate(12deg);
+}
+
+/* === 卡片样式 === */
+
+.math-card {
+  @apply bg-white rounded-3xl p-6 shadow-sm;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.math-card:hover {
+  @apply shadow-md;
+  transform: translateY(-2px);
+}
+
+/* 卡片几何角标 */
+.math-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-circle);
+  opacity: 0.15;
+}
+
+/* === 按钮样式 === */
+
+.btn-primary {
+  @apply font-bold py-3 px-6 rounded-2xl text-white;
+  background: var(--color-circle);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(255,107,74,0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255,107,74,0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  @apply font-bold py-3 px-6 rounded-2xl;
+  background: var(--color-warm-100);
+  color: var(--color-ink);
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--color-warm-200);
+}
+
+/* === 导航栏 === */
+
+.nav-bar {
+  @apply sticky top-0 z-50;
+  background: rgba(255,251,245,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* === 数据可视化 === */
+
+.stat-circle {
+  @apply rounded-full flex items-center justify-center;
+  background: conic-gradient(
+    var(--color-circle) var(--progress, 0%),
+    var(--color-warm-100) var(--progress, 0%)
+  );
+}
+
+.stat-number {
+  @apply font-display text-4xl font-800;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* === 战队颜色 === */
+
+.team-red { --team-color: #EF4444; }
+.team-blue { --team-color: #3B82F6; }
+.team-green { --team-color: #10B981; }
+.team-orange { --team-color: #F59E0B; }
+.team-purple { --team-color: #8B5CF6; }
+
+.team-badge {
+  background: var(--team-color);
+  @apply text-white px-3 py-1 rounded-full text-sm font-bold;
+}
+
+/* === 输入框 === */
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-xl text-base;
+  background: var(--color-warm-50);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  @apply outline-none;
+  border-color: var(--color-circle);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,74,0.1);
+}
+
+/* === 空状态 === */
+
+.empty-state {
+  @apply flex flex-col items-center justify-center py-16 text-center;
+}
+
+.empty-state-icon {
+  @apply text-6xl mb-4 opacity-30;
+}
+
+/* === 加载动画（极简版）=== */
+
+.loading-dot {
+  @apply w-2 h-2 rounded-full bg-circle;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* === 几何背景装饰 === */
+
+.geo-bg-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.geo-bg-pattern .circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255,107,74,0.1);
+}
+
+.geo-bg-pattern .triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid rgba(59,130,246,0.08);
+}
+
+.geo-bg-pattern .square {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(16,185,129,0.1);
+  transform: rotate(15deg);
+}
+
+/* === 响应式工具 === */
+
+.container-app {
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+}
