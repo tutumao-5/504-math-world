@@ -33,6 +33,10 @@ import { CSS } from '@dnd-kit/utilities';
 import * as LucideIcons from 'lucide-react';
 import Game24 from './components/Game24';
 import HomeworkSubmissionList from './components/HomeworkSubmissionList';
+import ClassLogo from './components/ClassLogo';
+import GeoBackground from './components/GeoBackground';
+import { GeoStatsPanel } from './components/GeoStats';
+import GeoTower from './components/GeoTower';
 import { generateDailyEncouragement, analyzeClassData, generateSpeedEncouragement, analyzeDailyLogs, generateStudentEvaluation } from './services/qwenService';
 
 // --- 类型定义 ---
@@ -2234,7 +2238,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-10 relative">
+    <div className="min-h-screen bg-cream text-ink font-sans pb-10 relative">
+      <GeoBackground />
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
@@ -2282,18 +2287,13 @@ export default function App() {
         <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 fixed top-0 left-0 right-0 z-40 shadow-sm">
           <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setViewMode('dashboard')}>
-              <div className="bg-indigo-600 p-1.5 rounded-lg text-white shadow-lg shadow-indigo-200">
-                <Rocket className="w-5 h-5 fill-current" />
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-black tracking-tight text-ink leading-tight">504班 · 数学世界</h1>
+              <ClassLogo size="sm" showText={true} />
                 <button 
                   onClick={(e) => { e.stopPropagation(); setShowDatePicker(true); setViewingMonth(selectedDate); }}
                   className="text-[10px] font-bold text-slate-500 flex items-center mt-0.5 hover:text-circle transition-colors bg-slate-100 px-2 py-0.5 rounded-full"
                 >
                   <CalendarDays size={10} className="mr-1"/> {currentDate}
                 </button>
-              </div>
             </div>
             <div className="flex gap-4 overflow-x-auto no-scrollbar items-center">
               {/* 班级动态组 */}
@@ -2434,61 +2434,11 @@ export default function App() {
 
             <div className="grid lg:grid-cols-2 gap-8 items-start">
               {/* 个人龙虎榜 */}
-              <div className="glass-panel rounded-[2rem] p-6 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl"></div>
-                <div className="flex items-center justify-between mb-6 relative z-10">
-                  <h3 className="text-2xl font-black text-slate-800 flex items-center">
-                    <div className="p-2 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-xl shadow-lg mr-3">
-                      <Trophy className="text-white" size={24}/>
-                    </div>
-                    个人龙虎榜
-                  </h3>
-                  <span className="text-xs font-black text-yellow-700 bg-yellow-100 px-4 py-1.5 rounded-full border border-yellow-200 shadow-sm">TOP 5</span>
-                </div>
-                
-                <div className="space-y-3 relative z-10">
-                  {[...students].sort((a,b) => (b.totalStars || 0) - (a.totalStars || 0)).slice(0, 5).map((student, idx, arr) => {
-                    const rank = arr.findIndex(s => (s.totalStars || 0) === (student.totalStars || 0)) + 1;
-                    const isTop3 = rank <= 3;
-                    const rankStyles = [
-                      'bg-gradient-to-r from-yellow-100 to-yellow-50 border-yellow-300 shadow-yellow-200/50', 
-                      'bg-gradient-to-r from-slate-100 to-slate-50 border-slate-300 shadow-slate-200/50', 
-                      'bg-gradient-to-r from-orange-100 to-orange-50 border-orange-300 shadow-orange-200/50' 
-                    ];
-                    const rankIcons = [
-                      <Crown size={14} className="text-yellow-600 mb-0.5" />,
-                      <Medal size={14} className="text-slate-600 mb-0.5" />,
-                      <Award size={14} className="text-orange-600 mb-0.5" />
-                    ];
-                    
-                    return (
-                      <div 
-                        key={student.id} 
-                        className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-in slide-in-from-bottom-4 fade-in fill-mode-both ${isTop3 ? rankStyles[rank - 1] : 'bg-white border-slate-100 hover:border-indigo-200 shadow-sm'}`}
-                        style={{ animationDelay: `${idx * 50}ms` }}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-full flex flex-col items-center justify-center font-black text-sm shadow-inner ${rank===1?'bg-gradient-to-br from-yellow-300 to-yellow-500 text-white':rank===2?'bg-gradient-to-br from-slate-300 to-slate-400 text-white':rank===3?'bg-gradient-to-br from-orange-300 to-orange-500 text-white':'bg-slate-100 text-slate-500 border border-slate-200'}`}>
-                            {isTop3 ? rankIcons[rank - 1] : null}
-                            <span className={isTop3 ? 'leading-none text-[10px]' : 'text-base'}>{rank}</span>
-                          </div>
-                          <div>
-                            <div className="font-bold text-slate-800 text-base">{student.name}</div>
-                            <div className="text-[10px] font-bold text-slate-400 bg-slate-100 inline-block px-2 py-0.5 rounded mt-0.5">
-                              可用币: <span className={student.availableStars < 0 ? 'text-rose-500' : 'text-indigo-500'}>{student.availableStars || 0}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end">
-                          <div className={`text-xl font-black flex items-center ${rank===1?'text-yellow-600':rank===2?'text-slate-600':rank===3?'text-orange-600':'text-slate-700'}`}>
-                            {student.totalStars || 0} <Star size={16} className={`ml-1 ${isTop3 ? 'fill-current' : 'fill-amber-400 text-amber-500'}`}/>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <GeoTower
+                students={students}
+                title="个人龙虎榜"
+                maxItems={5}
+              />
 
               {/* 战队风云榜 */}
               <div className="glass-panel rounded-[2rem] p-6 shadow-xl relative overflow-hidden">
