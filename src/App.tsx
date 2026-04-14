@@ -2441,117 +2441,73 @@ export default function App() {
               />
 
               {/* 战队风云榜 */}
-              <div className="glass-panel rounded-[2rem] p-6 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-400/10 rounded-full blur-3xl"></div>
-                <div className="flex items-center justify-between mb-6 relative z-10">
-                  <h3 className="text-2xl font-black text-slate-800 flex items-center">
-                    <div className="p-2 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl shadow-lg mr-3">
-                      <Trophy className="text-white" size={24}/>
-                    </div>
-                    战队风云榜
-                  </h3>
-                  <span className="text-xs font-black text-circle bg-indigo-100 px-4 py-1.5 rounded-full border border-indigo-200 shadow-sm">TOP 5</span>
-                </div>
-                
-                <div className="space-y-3 relative z-10">
-                  {[...teamStats].sort((a,b) => b.totalStars - a.totalStars).slice(0, 5).map((team, idx, arr) => {
-                    const rank = arr.findIndex(t => t.totalStars === team.totalStars) + 1;
-                    const isTop3 = rank <= 3;
-                    const rankStyles = [
-                      'bg-gradient-to-r from-yellow-100 to-yellow-50 border-yellow-300 shadow-yellow-200/50', 
-                      'bg-gradient-to-r from-slate-100 to-slate-50 border-slate-300 shadow-slate-200/50', 
-                      'bg-gradient-to-r from-orange-100 to-orange-50 border-orange-300 shadow-orange-200/50' 
-                    ];
-                    
-                    return (
-                      <div 
-                        key={team.id} 
-                        className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg animate-in slide-in-from-bottom-4 fade-in fill-mode-both ${isTop3 ? rankStyles[rank - 1] : 'bg-white border-slate-100 hover:border-indigo-200 shadow-sm'}`}
-                        style={{ animationDelay: `${idx * 50}ms` }}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-sm shadow-inner ${rank===1?'bg-gradient-to-br from-yellow-300 to-yellow-500 text-white':rank===2?'bg-gradient-to-br from-slate-300 to-slate-400 text-white':rank===3?'bg-gradient-to-br from-orange-300 to-orange-500 text-white':'bg-slate-100 text-slate-500 border border-slate-200'}`}>
-                            {rank}
-                          </div>
-                          <div>
-                            <div className="font-bold text-slate-800 text-base">{team.name}</div>
-                            <div className="text-[10px] font-bold text-slate-400 bg-slate-100 inline-block px-2 py-0.5 rounded mt-0.5">
-                              成员: {team.members.length}人
-                            </div>
-                          </div>
-                        </div>
-                        <div className={`text-xl font-black flex items-center ${rank===1?'text-yellow-600':rank===2?'text-slate-600':rank===3?'text-orange-600':'text-slate-700'}`}>
-                          {team.totalStars} <Star size={16} className={`ml-1 ${isTop3 ? 'fill-current' : 'fill-amber-400 text-amber-500'}`}/>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <GeoTower
+                students={teamStats.map(t => ({
+                  id: t.id,
+                  name: t.name,
+                  totalStars: t.totalStars,
+                  avatar: null,
+                }))}
+                title="战队风云榜"
+                maxItems={5}
+              />
             </div>
 
-            {/* 星空探索抽奖 (Gacha Machine) */}
+            {/* 几何探索宝箱 */}
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="dark-glass-panel rounded-[3.5rem] p-8 sm:p-16 shadow-[0_0_50px_rgba(79,70,229,0.15)] relative overflow-hidden border border-indigo-500/20"
+              className="math-card rounded-[2.5rem] p-8 sm:p-12 relative overflow-hidden"
+              style={{ background: 'linear-gradient(135deg, #FFFBF5 0%, #FEF7ED 100%)' }}
             >
-              {/* 背景装饰粒子 */}
-              <div className="absolute inset-0 pointer-events-none">
-                {[...Array(12)].map((_, i) => (
-                  <div 
-                    key={i}
-                    className="absolute w-1 h-1 bg-white rounded-full animate-twinkle"
-                    style={{
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
-                      animationDelay: `${Math.random() * 5}s`,
-                      opacity: Math.random() * 0.5 + 0.2
-                    }}
-                  />
-                ))}
+              {/* 背景几何装饰 */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full border-4 opacity-10" style={{ borderColor: '#FF6B4A' }} />
+                <div className="absolute -bottom-8 -left-8 w-32 h-32 border-4 opacity-10" style={{ borderColor: '#10B981', transform: 'rotate(15deg)' }} />
+                <div
+                  className="absolute top-20 right-20 opacity-10"
+                  style={{ width: 0, height: 0, borderLeft: '25px solid transparent', borderRight: '25px solid transparent', borderBottom: '43px solid #3B82F6' }}
+                />
               </div>
 
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.15)_0%,transparent_70%)] pointer-events-none"></div>
-              <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
-              <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
-              
               <div className="relative z-10 flex flex-col items-center">
                 <motion.div 
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="inline-flex items-center justify-center p-7 bg-gradient-to-br from-indigo-500 via-purple-600 to-blue-600 rounded-[2rem] mb-8 shadow-[0_0_40px_rgba(99,102,241,0.6)] border-4 border-white/20 animate-float"
+                  whileHover={{ scale: 1.05 }}
+                  className="inline-flex items-center justify-center p-6 rounded-[2rem] mb-8 shadow-lg"
+                  style={{ background: 'linear-gradient(135deg, #FF6B4A, #3B82F6)' }}
                 >
-                  <Rocket size={64} className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+                  <Gift size={64} style={{ color: '#FF6B4A' }} />
                 </motion.div>
                 
                 <div className="flex flex-col items-center gap-5 mb-10">
                   <div className="relative">
-                    <h3 className="text-4xl sm:text-5xl font-black text-white tracking-[0.2em] drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] uppercase">
+                    <h3 className="text-4xl sm:text-5xl font-black text-ink tracking-wider">
                       几何探索宝箱
                     </h3>
-                    <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
+                    <div className="absolute -bottom-2 left-0 w-full h-1 rounded-full" style={{ background: 'linear-gradient(90deg, transparent, #FF6B4A, transparent)' }}></div>
                   </div>
                   
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setShowProbSection(!showProbSection)}
-                    className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 border-2 ${
-                      showProbSection 
-                        ? 'bg-indigo-500 text-white border-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.6)]' 
-                        : 'bg-slate-900/80 text-indigo-300 border-indigo-500/30 hover:border-indigo-400/50 hover:bg-slate-800'
-                    }`}
+                    className="px-6 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 border-2"
+                    style={{
+                      background: showProbSection ? '#FF6B4A' : 'white',
+                      color: showProbSection ? 'white' : '#FF6B4A',
+                      borderColor: '#FF6B4A',
+                    }}
                   >
-                    <Shield size={16} className={showProbSection ? 'animate-pulse' : ''} />
+                    <Shield size={16} />
                     {showProbSection ? '隐藏概率公示' : '查看概率公示'}
                   </motion.button>
                 </div>
 
                 <div className="flex items-center gap-3 mb-12">
-                  <div className="h-px w-8 bg-indigo-500/30"></div>
-                  <p className="text-indigo-200 font-bold text-sm sm:text-base tracking-wide opacity-80">
-                    消耗星数开启几何宝箱 · 探索未知奖励
+                  <div className="h-px w-8" style={{ background: '#FF6B4A', opacity: 0.3 }}></div>
+                  <p className="text-ink-muted font-bold text-sm sm:text-base tracking-wide">
+                    消耗积分开启几何宝箱 · 探索未知奖励
                   </p>
                   <div className="h-px w-8 bg-indigo-500/30"></div>
                 </div>
