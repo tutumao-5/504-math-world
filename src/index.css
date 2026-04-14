@@ -136,7 +136,7 @@
 }
 
 .stat-number {
-  @apply font-display text-4xl font-800;
+  @apply font-display text-4xl font-extrabold;
   color: var(--color-ink);
   font-variant-numeric: tabular-nums;
 }

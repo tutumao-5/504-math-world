@@ -275,28 +275,28 @@ const INITIAL_STUDENTS = rawStudents.map((s, index) => ({
 const GACHA_MODES = [
   { 
     id: 1, 
-    name: "陨石勘探", 
+    name: "基础探索", 
     cost: 15, 
     description: "基础探索模式，适合日常练手",
     weights: { tier1: 0, tier2: 5, tier3: 25, tier4: 70 }
   },
   { 
     id: 2, 
-    name: "彗星捕获", 
+    name: "进阶探索", 
     cost: 30, 
     description: "进阶探索，更高概率获得稀有奖项",
     weights: { tier1: 5, tier2: 15, tier3: 50, tier4: 30 }
   },
   { 
     id: 3, 
-    name: "银河跃迁", 
+    name: "深度探索", 
     cost: 60, 
     description: "深度探索，排除四等奖，保底三等奖",
     weights: { tier1: 10, tier2: 60, tier3: 30, tier4: 0 }
   },
   { 
     id: 4, 
-    name: "超新星爆发", 
+    name: "终极探索", 
     cost: 80, 
     description: "终极探索，必中一等奖！",
     weights: { tier1: 100, tier2: 0, tier3: 0, tier4: 0 }
@@ -342,7 +342,7 @@ const INITIAL_PRIZES = [
     id: 'tier2', 
     tier: 2,
     level: "二等奖", 
-    name: "银河舰队", 
+    name: "几何舰队", 
     probability: 15, 
     stock: 28, 
     color: "bg-purple-500", 
@@ -526,7 +526,7 @@ export default function App() {
         id: monthlyTaskId,
         title: "数学创想家——立体蛋糕设计师！",
         description: `📢 本月挑战：数学创想家——立体蛋糕设计师！
-各位探险家，为了庆祝我们的星空探险取得阶段性胜利，星际后勤部需要大家亲手设计一款“三层立体庆典蛋糕”！本次任务分为基础与高阶两部分，量力而行，挑战自我！
+各位探险家，为了庆祝我们的数学世界取得阶段性胜利，几何后勤部需要大家亲手设计一款“三层立体庆典蛋糕”！本次任务分为基础与高阶两部分，量力而行，挑战自我！
 🚀 【通关任务】
 1.寻找与拼搭（造蛋糕）在家中寻找3个大小递减的长方体（或正方体）纸盒（例如：鞋盒、药盒、香皂盒等）。像叠罗汉一样，将它们居中叠放，用双面胶固定，做成一个三层蛋糕模型。
 2.基础测算（全员必做：算体积）用直尺分别测量这三个盒子的长、宽、高。计算制作这个三层蛋糕总共需要多少立方厘米的“蛋糕胚”（即求三个盒子的总体积）。
@@ -1643,7 +1643,7 @@ export default function App() {
     
     const student = students.find(s => s.id === studentId);
     if (!student) {
-      showNotification('未找到该学号的宇航员', 'error');
+      showNotification('未找到该学号的同学', 'error');
       return;
     }
     
@@ -1852,15 +1852,15 @@ export default function App() {
       availableStars: 0,
       avatar: null
     };
-    // 确保新宇航员默认排在最后
+    // 确保新同学默认排在最后
     setStudents(prev => [...prev, newStudent]);
-    showNotification('新宇航员已加入！🚀');
+    showNotification('新同学已加入！🚀');
   };
 
   const handleDeleteStudent = (studentId) => {
-    if (window.confirm('确定要删除这位宇航员吗？其所有数据将永久丢失！')) {
+    if (window.confirm('确定要删除这位同学吗？其所有数据将永久丢失！')) {
       setStudents(prev => prev.filter(s => s.id !== studentId));
-      showNotification('宇航员已离开机组。');
+      showNotification('同学已离开机组。');
     }
   };
 
@@ -1873,7 +1873,7 @@ export default function App() {
   };
 
   const handleBulkAction = (amount: number) => {
-    if (!window.confirm(`确定要给全班所有宇航员 ${amount > 0 ? '增加' : '扣除'} ${Math.abs(amount)} 颗星吗？`)) return;
+    if (!window.confirm(`确定要给全班所有同学 ${amount > 0 ? '增加' : '扣除'} ${Math.abs(amount)} 颗星吗？`)) return;
     
     const timestamp = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
     const dateKey = selectedDate.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' });
@@ -1952,7 +1952,7 @@ export default function App() {
 
     setLogs(prev => [...newLogs, ...prev].slice(0, 500));
     setQuickActionStudentId('');
-    showNotification(`已为 ${targetStudents.length} 位宇航员录入: ${action.label}`);
+    showNotification(`已为 ${targetStudents.length} 位同学录入: ${action.label}`);
     
     if (failedIds.length > 0) {
       setTimeout(() => showNotification(`未找到学号: ${failedIds.join(', ')}`, 'error'), 1500);
@@ -2286,10 +2286,10 @@ export default function App() {
                 <Rocket className="w-5 h-5 fill-current" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl font-black tracking-tight text-slate-800 leading-tight">504班 · 星空探险</h1>
+                <h1 className="text-xl font-black tracking-tight text-ink leading-tight">504班 · 数学世界</h1>
                 <button 
                   onClick={(e) => { e.stopPropagation(); setShowDatePicker(true); setViewingMonth(selectedDate); }}
-                  className="text-[10px] font-bold text-slate-500 flex items-center mt-0.5 hover:text-indigo-600 transition-colors bg-slate-100 px-2 py-0.5 rounded-full"
+                  className="text-[10px] font-bold text-slate-500 flex items-center mt-0.5 hover:text-circle transition-colors bg-slate-100 px-2 py-0.5 rounded-full"
                 >
                   <CalendarDays size={10} className="mr-1"/> {currentDate}
                 </button>
@@ -2299,25 +2299,25 @@ export default function App() {
               {/* 班级动态组 */}
   
               <div className="flex bg-slate-100/50 p-1 rounded-2xl border border-slate-200 gap-1 items-center">
-                <button onClick={() => setViewMode('dashboard')} className={`text-xs font-bold px-4 py-2 rounded-xl transition flex items-center whitespace-nowrap ${viewMode === 'dashboard' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
-                  <TrendingUp size={14} className="mr-1.5"/> 荣耀大厅
+                <button onClick={() => setViewMode('dashboard')} className={`text-xs font-bold px-4 py-2 rounded-xl transition flex items-center whitespace-nowrap ${viewMode === 'dashboard' ? 'bg-white text-circle shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
+                  <TrendingUp size={14} className="mr-1.5"/> 几何殿堂
                 </button>
-                <button onClick={() => setViewMode('teams')} className={`text-xs font-bold px-4 py-2 rounded-xl transition flex items-center whitespace-nowrap ${viewMode === 'teams' ? 'bg-white text-indigo-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
-                  <Award size={14} className="mr-1.5"/> 战队一览
+                <button onClick={() => setViewMode('teams')} className={`text-xs font-bold px-4 py-2 rounded-xl transition flex items-center whitespace-nowrap ${viewMode === 'teams' ? 'bg-white text-circle shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
+                  <Award size={14} className="mr-1.5"/> 战队竞技
                 </button>
               </div>
   
               {/* 学生档案 */}
-              <button onClick={() => setViewMode('all_students')} className={`text-xs font-bold px-4 py-2 rounded-2xl transition shadow-sm border whitespace-nowrap flex items-center ${viewMode === 'all_students' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'}`}>
-                <Users size={14} className="mr-1.5"/> 宇航员档案
+              <button onClick={() => setViewMode('all_students')} className={`text-xs font-bold px-4 py-2 rounded-2xl transition shadow-sm border whitespace-nowrap flex items-center ${viewMode === 'all_students' ? 'bg-circle/10 text-circle border-circle/20' : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'}`}>
+                <Users size={14} className="mr-1.5"/> 我的成长
               </button>
   
-              {/* 智慧补给站 */}
+              {/* 数学乐园 */}
               <button 
                 onClick={() => setShowRewardSelector(true)} 
-                className={`text-xs font-bold px-4 py-2 rounded-2xl transition shadow-sm border whitespace-nowrap flex items-center ${['prizes', 'redemption', 'math_life', 'ai_hub'].includes(viewMode) ? 'bg-pink-100 text-pink-700 border-pink-200' : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'}`}
+                className={`text-xs font-bold px-4 py-2 rounded-2xl transition shadow-sm border whitespace-nowrap flex items-center ${['prizes', 'redemption', 'math_life', 'ai_hub'].includes(viewMode) ? 'bg-triangle/10 text-triangle border-triangle/20' : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'}`}
               >
-                <Gift size={14} className="mr-1.5"/> 智慧补给站
+                <Gift size={14} className="mr-1.5"/> 数学乐园
                 {pendingPrizes.length > 0 && <span className="ml-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>}
               </button>
   
@@ -2380,7 +2380,7 @@ export default function App() {
                     animate={{ opacity: 0.9, height: 'auto' }}
                     className="text-xs font-medium mt-0.5 line-clamp-1"
                   >
-                    点击查看详情，各位宇航员，请准备好你的装备！
+                    点击查看详情，各位同学，请准备好你的装备！
                   </motion.p>
                 )}
               </div>
@@ -2406,7 +2406,7 @@ export default function App() {
 
       <main className="max-w-6xl mx-auto p-4 pt-24 sm:pt-20 relative z-10">
         
-        {/* ================= DASHBOARD (荣耀大厅 & 抽奖) ================= */}
+        {/* ================= DASHBOARD (几何殿堂 & 抽奖) ================= */}
         {viewMode === 'dashboard' && (
           <div className="space-y-10 animate-in fade-in zoom-in-95 duration-500">
             {/* Hero Banner (动态流光横幅) */}
@@ -2419,7 +2419,7 @@ export default function App() {
               <div className="absolute bottom-1/4 left-1/4 text-white/20 animate-pulse"><Star size={20}/></div>
 
               <h2 className="text-xl sm:text-2xl font-bold mb-3 relative z-10 tracking-widest opacity-90 uppercase flex items-center justify-center">
-                <Sparkles size={20} className="mr-2"/> 504班 · 探索总星数 <Sparkles size={20} className="ml-2"/>
+                <Sparkles size={20} className="mr-2"/> 504班 · 几何积分 <Sparkles size={20} className="ml-2"/>
               </h2>
               
               <div className="text-7xl sm:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-100 via-yellow-300 to-yellow-600 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)] my-6 flex justify-center items-center relative z-10 hover:scale-105 transition-transform duration-500 cursor-default">
@@ -2428,7 +2428,7 @@ export default function App() {
               </div>
               
               <p className="text-sm font-bold relative z-10 bg-white/20 backdrop-blur-md inline-block px-8 py-3 rounded-full border border-white/30 shadow-lg mt-2">
-                🏆 经验值（总星数）只增不减，决定你的最终段位！
+                🏆 几何积分记录你的成长，每次进步都值得骄傲！
               </p>
             </div>
 
@@ -2500,7 +2500,7 @@ export default function App() {
                     </div>
                     战队风云榜
                   </h3>
-                  <span className="text-xs font-black text-indigo-700 bg-indigo-100 px-4 py-1.5 rounded-full border border-indigo-200 shadow-sm">TOP 5</span>
+                  <span className="text-xs font-black text-circle bg-indigo-100 px-4 py-1.5 rounded-full border border-indigo-200 shadow-sm">TOP 5</span>
                 </div>
                 
                 <div className="space-y-3 relative z-10">
@@ -2578,7 +2578,7 @@ export default function App() {
                 <div className="flex flex-col items-center gap-5 mb-10">
                   <div className="relative">
                     <h3 className="text-4xl sm:text-5xl font-black text-white tracking-[0.2em] drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] uppercase">
-                      星空探索盲盒
+                      几何探索宝箱
                     </h3>
                     <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
                   </div>
@@ -2601,7 +2601,7 @@ export default function App() {
                 <div className="flex items-center gap-3 mb-12">
                   <div className="h-px w-8 bg-indigo-500/30"></div>
                   <p className="text-indigo-200 font-bold text-sm sm:text-base tracking-wide opacity-80">
-                    消耗星数开启星际盲盒 · 探索未知奖励
+                    消耗星数开启几何宝箱 · 探索未知奖励
                   </p>
                   <div className="h-px w-8 bg-indigo-500/30"></div>
                 </div>
@@ -2925,7 +2925,7 @@ export default function App() {
                          </div>
                          <div>
                            <label className="block text-xs font-bold text-slate-500 mb-1.5 ml-1">盲盒名称</label>
-                           <input type="text" value={p.name} placeholder="如: 星际宝藏" onChange={(e) => {
+                           <input type="text" value={p.name} placeholder="如: 几何宝藏" onChange={(e) => {
                              const newData = [...editingPrizesData];
                              newData[idx].name = e.target.value;
                              setEditingPrizesData(newData);
@@ -2961,7 +2961,7 @@ export default function App() {
                              <option value="bg-rose-500">红色 (Rose)</option>
                              <option value="bg-indigo-500">靛青 (Indigo)</option>
                              <option value="bg-slate-500">灰色 (Slate)</option>
-                             <option value="bg-pink-500">粉色 (Pink)</option>
+                             <option value="bg-triangle">粉色 (Pink)</option>
                            </select>
                          </div>
                        </div>
@@ -3008,7 +3008,7 @@ export default function App() {
               <div className="absolute bottom-10 right-12 text-yellow-300/60 animate-float-delayed"><Star size={48} className="fill-yellow-300/30"/></div>
               
               <h2 className="text-3xl sm:text-5xl font-black mb-4 relative z-10 tracking-widest flex items-center justify-center drop-shadow-lg">
-                <Award className="mr-4 text-yellow-400 drop-shadow-md" size={48}/> 战队一览
+                <Award className="mr-4 text-yellow-400 drop-shadow-md" size={48}/> 战队竞技
               </h2>
               <p className="text-sm sm:text-base font-bold relative z-10 bg-white/20 backdrop-blur-md inline-block px-8 py-3 rounded-full border border-white/30 shadow-lg mt-2">
                 🚀 团队的力量无可限量！点击下方战队名称可自定义修改！
@@ -3056,7 +3056,7 @@ export default function App() {
                         </div>
                         <div className="flex-1 overflow-hidden">
                           <div className="text-xs font-bold text-slate-400 mb-0.5">冠军战队</div>
-                          <div className="text-xl font-black text-slate-800 truncate group-hover:text-indigo-600 transition-colors">
+                          <div className="text-xl font-black text-slate-800 truncate group-hover:text-circle transition-colors">
                             {teamNames[champion.teamId] || `第 ${champion.teamId} 战队`}
                           </div>
                         </div>
@@ -3143,7 +3143,7 @@ export default function App() {
                                 }}
                                 autoFocus
                                 onClick={(e) => e.stopPropagation()}
-                                className="font-bold text-slate-800 text-xl group-hover:text-indigo-700 transition-colors bg-transparent border-none outline-none focus:ring-2 focus:ring-indigo-300 rounded w-full"
+                                className="font-bold text-slate-800 text-xl group-hover:text-circle transition-colors bg-transparent border-none outline-none focus:ring-2 focus:ring-indigo-300 rounded w-full"
                               />
                             ) : (
                               <div className="flex items-center gap-2 w-full overflow-hidden">
@@ -3152,7 +3152,7 @@ export default function App() {
                                     setSelectedTeamDetailId(team.id);
                                     setViewMode('team_detail');
                                   }}
-                                  className="font-bold text-slate-800 text-xl hover:text-indigo-600 transition-colors text-left truncate flex-1"
+                                  className="font-bold text-slate-800 text-xl hover:text-circle transition-colors text-left truncate flex-1"
                                 >
                                   {teamNames[team.id] || `第 ${team.id} 战队`}
                                 </button>
@@ -3370,7 +3370,7 @@ export default function App() {
             <div className="bg-white rounded-3xl shadow-xl border border-indigo-50 overflow-hidden">
               <div className="bg-gradient-to-r from-indigo-500 to-cyan-500 p-6 text-white flex justify-between items-center">
                 <div>
-                  <h2 className="text-2xl font-black flex items-center"><Users className="mr-3" size={28} /> 宇航员档案库</h2>
+                  <h2 className="text-2xl font-black flex items-center"><Users className="mr-3" size={28} /> 我的成长库</h2>
                   <p className="text-xs text-indigo-100 opacity-80 mt-1">点击学生卡片可进行快捷加/扣星操作</p>
                 </div>
                 <div className="flex gap-2">
@@ -3400,7 +3400,7 @@ export default function App() {
                       </div>
                       <div className="text-left">
                         <div className="font-black text-slate-700">全员快速加/减星</div>
-                        <div className="text-[10px] text-slate-400 mt-0.5">一键为所有宇航员同步录入流水</div>
+                        <div className="text-[10px] text-slate-400 mt-0.5">一键为所有同学同步录入流水</div>
                       </div>
                     </div>
                     <ChevronRight size={20} className="text-slate-300 group-hover:text-indigo-500 transition-colors" />
@@ -3442,7 +3442,7 @@ export default function App() {
                       <div className="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-lg mb-2 relative z-10">
                         {student.id}
                       </div>
-                      <div className="font-bold text-slate-700 mb-2 group-hover:text-indigo-700">{student.name}</div>
+                      <div className="font-bold text-slate-700 mb-2 group-hover:text-circle">{student.name}</div>
                       
                       <div className="w-full flex flex-col gap-1.5 mt-1">
                         <div className="flex items-center justify-between bg-yellow-50 px-2 py-1 rounded-lg">
@@ -4079,12 +4079,12 @@ export default function App() {
               <div className="bg-gradient-to-r from-amber-400 to-orange-500 p-6 text-white flex flex-wrap justify-between items-center gap-4">
                 <div className="flex items-center space-x-3">
                   <Ticket size={32} className="animate-bounce" />
-                  <h2 className="text-2xl font-black tracking-tight">星际补给站 (兑奖)</h2>
+                  <h2 className="text-2xl font-black tracking-tight">几何商店 (兑奖)</h2>
                 </div>
                 <div className="flex items-center space-x-3 bg-white/20 backdrop-blur-md p-2 rounded-xl">
                   <Search size={16} className="ml-2"/>
                   <select value={redemptionFilterId} onChange={(e) => setRedemptionFilterId(e.target.value)} className="bg-transparent text-white font-bold py-1.5 pr-8 focus:outline-none border-none cursor-pointer">
-                    <option value="" className="text-slate-800">显示全部宇航员</option>
+                    <option value="" className="text-slate-800">显示全部同学</option>
                     {students.map(s => <option key={s.id} value={s.id} className="text-slate-800">#{s.id} {s.name}</option>)}
                   </select>
                 </div>
@@ -4157,12 +4157,12 @@ export default function App() {
               {/* 战队人员编排 */}
               <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 md:col-span-2">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-black text-slate-800 flex items-center"><Users className="mr-2 text-indigo-500"/> 宇航员管理与编排</h3>
+                  <h3 className="text-lg font-black text-slate-800 flex items-center"><Users className="mr-2 text-indigo-500"/> 同学管理与编排</h3>
                   <button 
                     onClick={handleAddStudent}
                     className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all flex items-center shadow-md"
                   >
-                    <UserPlus size={16} className="mr-2"/> 添加宇航员
+                    <UserPlus size={16} className="mr-2"/> 添加同学
                   </button>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -4171,7 +4171,7 @@ export default function App() {
                       <button 
                         onClick={() => handleDeleteStudent(student.id)}
                         className="absolute -top-2 -right-2 bg-rose-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm z-10"
-                        title="删除宇航员"
+                        title="删除同学"
                       >
                         <X size={12} />
                       </button>
@@ -4221,7 +4221,7 @@ export default function App() {
                         <div className="text-[10px] font-black text-slate-400 mb-2 uppercase">备份 #{idx + 1}</div>
                         {data ? (
                           <>
-                            <div className="font-bold text-indigo-700 text-sm mb-1">{data.backupDate}</div>
+                            <div className="font-bold text-circle text-sm mb-1">{data.backupDate}</div>
                             <div className="text-[10px] text-indigo-400 mb-3">{new Date(data.timestamp).toLocaleTimeString()}</div>
                             <button 
                               onClick={() => {
@@ -4499,7 +4499,7 @@ export default function App() {
                         className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all active:scale-95 relative overflow-hidden
                           ${action.type === 'success' ? 'bg-emerald-50 border-emerald-100 text-emerald-700 hover:bg-emerald-100' :
                             action.type === 'warning' ? 'bg-amber-50 border-amber-100 text-amber-700 hover:bg-amber-100' :
-                            action.type === 'special' ? 'bg-indigo-50 border-indigo-100 text-indigo-700 hover:bg-indigo-100' :
+                            action.type === 'special' ? 'bg-indigo-50 border-indigo-100 text-circle hover:bg-indigo-100' :
                             'bg-blue-50 border-blue-100 text-blue-700 hover:bg-blue-100'
                           }`}
                       >
@@ -4806,7 +4806,7 @@ export default function App() {
                     >
                       <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl -mr-10 -mt-10 transition-colors duration-500 ${task.status === 'completed' ? 'bg-slate-300/10' : 'bg-indigo-500/10 group-hover:bg-indigo-500/20'}`}></div>
                       <div className="flex justify-between items-center mb-3 relative z-10">
-                        <h4 className={`text-lg font-bold ${task.status === 'completed' ? 'text-slate-500 line-through' : 'text-indigo-900'} group-hover:text-indigo-700 transition-colors`}>{task.title}</h4>
+                        <h4 className={`text-lg font-bold ${task.status === 'completed' ? 'text-slate-500 line-through' : 'text-indigo-900'} group-hover:text-circle transition-colors`}>{task.title}</h4>
                         <div className="flex items-center gap-2">
                           <span className={`${task.status === 'completed' ? 'bg-slate-100 text-slate-500' : 'bg-indigo-100 text-indigo-600'} text-xs font-bold px-2 py-1 rounded-lg flex items-center shadow-sm border ${task.status === 'completed' ? 'border-slate-200' : 'border-indigo-200'}`}>
                             <Star size={12} className={`mr-1 ${task.status === 'completed' ? 'fill-slate-400' : 'fill-indigo-500 animate-pulse'}`} /> +{task.reward}
@@ -4841,7 +4841,7 @@ export default function App() {
                             {[...task.awardedStudents]
                               .sort((a, b) => b.stars !== a.stars ? b.stars - a.stars : a.studentId - b.studentId)
                               .map((student, i) => (
-                              <span key={i} className="text-xs bg-white/60 text-indigo-700 px-2 py-1 rounded-md border border-indigo-100 flex items-center font-bold backdrop-blur-sm">
+                              <span key={i} className="text-xs bg-white/60 text-circle px-2 py-1 rounded-md border border-indigo-100 flex items-center font-bold backdrop-blur-sm">
                                 {student.name} <span className="text-indigo-500 ml-1">+{student.stars}</span>
                               </span>
                             ))}
@@ -4998,7 +4998,7 @@ export default function App() {
                   <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 mb-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold mb-2 ${selectedTask.type === 'weekly' ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-indigo-700'}`}>
+                        <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold mb-2 ${selectedTask.type === 'weekly' ? 'bg-amber-100 text-amber-700' : 'bg-indigo-100 text-circle'}`}>
                           {selectedTask.type === 'weekly' ? <Zap size={12} className="mr-1"/> : <Trophy size={12} className="mr-1"/>}
                           {selectedTask.type === 'weekly' ? '本周挑战' : '本月探索'}
                         </div>
@@ -5364,7 +5364,7 @@ export default function App() {
               </button>
             </div>
 
-            {/* 4. AI 宇航员成长报告 */}
+            {/* 4. AI 同学成长报告 */}
             <div className="bg-white rounded-[2rem] p-8 shadow-xl border border-amber-100 relative overflow-hidden group hover:shadow-2xl transition-all duration-500 flex flex-col min-h-[420px]">
               <div className="relative z-10 flex-1 flex flex-col items-center text-center">
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-50 rounded-full blur-3xl group-hover:bg-amber-100 transition-colors"></div>
@@ -5384,7 +5384,7 @@ export default function App() {
                   <Sparkles size={40} />
                 </motion.div>
                 
-                <h3 className="text-2xl font-black text-slate-800 mb-4">AI 宇航员成长报告</h3>
+                <h3 className="text-2xl font-black text-slate-800 mb-4">AI 同学成长报告</h3>
                 <p className="text-slate-500 text-sm leading-relaxed mb-8 px-4">
                   想知道你在太空基地的表现如何吗？AI 老师已经为你准备好了专属的成长评价。每周第一次免费，第二次起需 5 颗星星。✨
                 </p>
@@ -5718,7 +5718,7 @@ export default function App() {
                       className={`
                         aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-bold transition-all relative
                         ${isSelected ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 scale-110 z-10' : 
-                          hasData ? 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100' : 
+                          hasData ? 'bg-indigo-50 text-circle hover:bg-indigo-100' : 
                           'text-slate-300 hover:bg-slate-50'}
                         ${isToday && !isSelected ? 'border border-indigo-200' : ''}
                       `}
@@ -5741,17 +5741,17 @@ export default function App() {
         </div>
       )}
 
-      {/* 5. Reward Selector Modal (智慧补给站选择器) */}
+      {/* 5. Reward Selector Modal (数学乐园选择器) */}
       {showRewardSelector && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/20 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setShowRewardSelector(false)}>
             <div className="bg-white rounded-2xl w-full max-w-xs shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                <h3 className="font-bold text-slate-700">智慧补给站</h3>
+                <h3 className="font-bold text-slate-700">数学乐园</h3>
                 <button onClick={() => setShowRewardSelector(false)} className="text-slate-400 hover:text-slate-600"><X size={18}/></button>
             </div>
             <div className="p-2 space-y-1">
                 <button onClick={() => { setShowRules(true); setShowRewardSelector(false); }} className="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-50 flex items-center transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center mr-3 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center mr-3 group-hover:bg-indigo-100 group-hover:text-circle transition-colors">
                         <ScrollText size={16}/>
                     </div>
                     <div>
@@ -5760,7 +5760,7 @@ export default function App() {
                     </div>
                 </button>
                 <button onClick={() => { setViewMode('math_life'); setShowRewardSelector(false); }} className="w-full text-left px-4 py-3 rounded-xl hover:bg-slate-50 flex items-center transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-500 flex items-center justify-center mr-3 group-hover:bg-indigo-200 group-hover:text-indigo-600 transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-500 flex items-center justify-center mr-3 group-hover:bg-indigo-200 group-hover:text-circle transition-colors">
                         <BrainCircuit size={16}/>
                     </div>
                     <div>
@@ -5929,7 +5929,7 @@ export default function App() {
                       autoFocus
                     />
                   </div>
-                  <p className="text-xs text-slate-400 mt-3 italic">* 全员操作将为所有在册宇航员同步录入流水记录</p>
+                  <p className="text-xs text-slate-400 mt-3 italic">* 全员操作将为所有在册同学同步录入流水记录</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 pt-4">
@@ -6157,7 +6157,7 @@ export default function App() {
                   <Sparkles size={28} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-black">AI 宇航员成长报告</h3>
+                  <h3 className="text-2xl font-black">AI 同学成长报告</h3>
                   <p className="text-amber-100 text-sm font-medium mt-1">深度分析你的太空基地表现</p>
                 </div>
               </div>
